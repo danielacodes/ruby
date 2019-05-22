@@ -1,9 +1,3 @@
 puts "Give me a number."
-number1 = gets
-number1 = number1.to_i
-number2 = number1 + 5
-number2 *= 2
-number2 -= 4
-number2 /= 2
-number3 = number2 - number1
-puts "Always #{number3}"
+number = gets.to_i
+puts "Always " + ((((number+5)*2)-4)/2-number).to_s
