@@ -1,64 +1,78 @@
 class Blog
 
-# set title
-  def set_title=(blog_title)
-    @title = blog_title
+# save all blog posts in an array or a hash
+  @@all_blog_posts = []
+
+# create variable that will count the blog posts
+  @@num_blog_posts = 0
+
+  def self.all
+    @@all_blog_posts
   end
 
-  def get_title
-    return @title
+  def self.add(thing)
+    @@all_blog_posts << thing
+    @@num_blog_posts += 1
+  end
+
+  def self.publish
+    @@all_blog_posts.each do |post|
+      puts "Title:\n #{post.title}"
+      puts "Body:\n #{post.content}"
+      puts "Publish Date:\n #{post.created_at}"
+    end
+  end
+
+end
+
+
+class BlogPost < Blog
+
+  def self.create
+    post = new
+    puts "Name your blog post:"
+    post.title = gets.chomp
+    puts "Your blog post content:"
+    post.content = gets.chomp
+    post.created_at = Time.now
+    post.save
+    puts "Do you want to create another post? [Y/N]"
+    create if gets.chomp.downcase == 'y'
+  end
+
+# set title
+  def title
+    @title
+  end
+
+  def title=(title)
+    @title = title
   end
 
 # set content
-  def set_content=(blog_content)
-    @content = blog_content
+  def content
+    @content
   end
 
-  def get_content
-    return @content
+  def content=(content)
+    @content = content
   end
 
 # set publish date
-  def set_publish_date=(blog_date)
-    @date = blog_date
+  def created_at
+    @created_at
   end
 
-  def get_date
-    return @date
+  def created_at=(created_at)
+    @created_at = created_at
   end
 
-# set author
-  def set_author=(blog_author)
-    @author = blog_author
+  def save
+    BlogPost.add(self)
   end
-
-  def get_author
-    return @author
-  end
-
 end
 
-# question about creating another blog post
-puts "Do you want to create another blog post? [Y/N]"
-answer = gets
-
-if answer == "Y"
-  # create another blog post
-else
-  puts "That's all blog posts we have."
-end
-
-# save all blog posts in an array or a hash
-# 1. Array
-
-# 2. Hash
-
-# push new blog post into array
-
-# create variable that will count blog posts - starting at 0 + ??
-
-def publish
-
-  # output all blog posts to the terminal
-
-end
+BlogPost.create
+all_blog_posts = BlogPost.all
+puts all_blog_posts.inspect
+BlogPost.publish
